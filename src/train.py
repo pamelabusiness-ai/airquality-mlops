@@ -18,11 +18,11 @@ import mlflow.sklearn
 
 def train_model():
     # Load preprocessed data
-    df = pd.read_csv('data/processed.csv')
+    df = pd.read_csv("data/processed.csv")
 
     # Define features and target
-    X = df[['T']].values
-    y = df['CO(GT)'].values
+    X = df[["T"]].values
+    y = df["CO(GT)"].values
 
     # Split data into training and testing sets (80/20)
     X_train, X_test, y_train, y_test = train_test_split(
@@ -30,7 +30,7 @@ def train_model():
     )
 
     # Start MLflow experiment tracking
-    mlflow.set_experiment('airquality_experiment')
+    mlflow.set_experiment("airquality_experiment")
 
     with mlflow.start_run():
         # Train Linear Regression model
@@ -43,15 +43,15 @@ def train_model():
         r2 = r2_score(y_test, y_pred)
 
         # Log parameters and metrics to MLflow
-        mlflow.log_param('model_type', 'LinearRegression')
-        mlflow.log_param('test_size', 0.2)
-        mlflow.log_metric('rmse', rmse)
-        mlflow.log_metric('r2_score', r2)
+        mlflow.log_param("model_type", "LinearRegression")
+        mlflow.log_param("test_size", 0.2)
+        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("r2_score", r2)
 
         # Save model
-        os.makedirs('model', exist_ok=True)
-        joblib.dump(model, 'model/model.pkl')
-        mlflow.sklearn.log_model(model, 'model')
+        os.makedirs("model", exist_ok=True)
+        joblib.dump(model, "model/model.pkl")
+        mlflow.sklearn.log_model(model, "model")
 
         print(f"Training complete. RMSE: {rmse:.4f} | R2: {r2:.4f}")
         print("Model saved to model/model.pkl")
@@ -59,5 +59,5 @@ def train_model():
     return model
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     train_model()

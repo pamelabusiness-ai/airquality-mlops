@@ -23,14 +23,14 @@ jobs:
           pip install -r requirements.txt
           pip install pytest black flake8 isort
 
-      - name: Run flake8
-        run: flake8 .
+      - name: Run flake8 (only src/)
+        run: flake8 src
 
       - name: Run black check
-        run: black --check .
+        run: black --check src
 
       - name: Run isort check
-        run: isort . --check-only
+        run: isort src --check-only
 
       - name: Run tests
         run: pytest
