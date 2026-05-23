@@ -1,4 +1,4 @@
-﻿name: CD - Build and Push Docker Image
+﻿name: CD - Build, Push and Deploy
 
 on:
   push:
@@ -38,3 +38,16 @@ jobs:
           context: .
           push: true
           tags: pamelabusiness/airquality-mlops:latest
+
+      - name: Deploy to Google Cloud VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            docker pull pamelabusiness/airquality-mlops:latest
+            docker stop airquality-api || true
+            docker rm airquality-api || true
+            docker run -d -p 5000:5000 --name airquality-api pamelabusiness/airquality-mlops:latest
+            echo "Deployment successful!"
