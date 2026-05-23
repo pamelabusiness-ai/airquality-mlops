@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY src/app.py .
-COPY model/model.pkl model/model.pkl
+
 
 ENV MODEL_PATH=model/model.pkl
 
