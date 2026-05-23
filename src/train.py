@@ -15,6 +15,7 @@ import os
 import mlflow
 import mlflow.sklearn
 
+
 def train_model():
     # Load preprocessed data
     df = pd.read_csv('data/processed.csv')
@@ -52,10 +53,11 @@ def train_model():
         joblib.dump(model, 'model/model.pkl')
         mlflow.sklearn.log_model(model, 'model')
 
-        print(f'Training complete. RMSE: {rmse:.4f} | R2: {r2:.4f}')
-        print(f'Model saved to model/model.pkl')
+        print(f"Training complete. RMSE: {rmse:.4f} | R2: {r2:.4f}")
+        print("Model saved to model/model.pkl")
 
     return model
+
 
 if __name__ == '__main__':
     train_model()
