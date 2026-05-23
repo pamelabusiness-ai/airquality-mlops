@@ -9,14 +9,18 @@ import pandas as pd
 from flask import Flask, request, jsonify
 import os
 
+
 app = Flask(__name__)
+
 
 # Load the trained model
 model_path = os.environ.get('MODEL_PATH', 'model/model.pkl')
 model = joblib.load(model_path)
 
+
 # Load dataset for stats
 data_path = os.environ.get('DATA_PATH', 'data/processed.csv')
+
 
 def get_risk_level(co_value):
     if co_value < 1.0:
@@ -27,6 +31,7 @@ def get_risk_level(co_value):
         return 'HIGH'
     else:
         return 'VERY HIGH'
+
 
 @app.route('/')
 def home():
@@ -43,6 +48,7 @@ def home():
         }
     })
 
+
 @app.route('/predict', methods=['GET'])
 def predict():
     try:
@@ -55,6 +61,7 @@ def predict():
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
 
 @app.route('/predict/batch', methods=['GET'])
 def predict_batch():
@@ -76,6 +83,7 @@ def predict_batch():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+
 @app.route('/predict/risk', methods=['GET'])
 def predict_risk():
     try:
@@ -96,6 +104,7 @@ def predict_risk():
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
 
 @app.route('/stats', methods=['GET'])
 def stats():
@@ -119,9 +128,11 @@ def stats():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+
 @app.route('/health', methods=['GET'])
 def health():
     return jsonify({'status': 'healthy', 'model': 'loaded'})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
