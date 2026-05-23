@@ -44,7 +44,7 @@ jobs:
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
+          password: ${{ secrets.VM_PASSWORD }}
           script: |
             docker pull pamelabusiness/airquality-mlops:latest
             docker stop airquality-api || true
