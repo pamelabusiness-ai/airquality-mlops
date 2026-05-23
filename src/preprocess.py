@@ -14,9 +14,11 @@ def load_and_preprocess():
     os.makedirs('data', exist_ok=True)
     df.to_csv('data/processed.csv', index=False)
 
-    print(
-        f'Preprocessing complete. {len(df)} records saved to data/processed.csv'
+    msg = (
+        "Preprocessing complete. "
+        f"{len(df)} records saved to data/processed.csv"
     )
+    print(msg)
 
     return df
 
