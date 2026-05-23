@@ -7,7 +7,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -39,15 +38,14 @@ jobs:
           push: true
           tags: pamelabusiness/airquality-mlops:latest
 
-      - name: Deploy to Google Cloud VM
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          password: ${{ secrets.VM_PASSWORD }}
-          script: |
-            docker pull pamelabusiness/airquality-mlops:latest
-            docker stop airquality-api || true
-            docker rm airquality-api || true
-            docker run -d -p 5000:5000 --name airquality-api pamelabusiness/airquality-mlops:latest
-            echo "Deployment successful!"
+  deploy:
+    runs-on: self-hosted
+    needs: build-and-push
+    steps:
+      - name: Deploy to VM
+        run: |
+          docker pull pamelabusiness/airquality-mlops:latest
+          docker stop airquality-api || true
+          docker rm airquality-api || true
+          docker run -d -p 5000:5000 --name airquality-api pamelabusiness/airquality-mlops:latest
+          echo "Deployment successful!"
