@@ -3,11 +3,12 @@
 # Flask REST API for Air Quality CO Prediction
 # Reference: Flask documentation https://flask.palletsprojects.com/
 
+import os
+
 import joblib
 import numpy as np
 import pandas as pd
-from flask import Flask, request, jsonify
-import os
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 

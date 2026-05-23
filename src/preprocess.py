@@ -1,5 +1,6 @@
-﻿import pandas as pd
-import os
+﻿import os
+
+import pandas as pd
 
 
 def load_and_preprocess():
